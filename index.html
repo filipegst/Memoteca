@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRUD de Pensamentos</title>
+   
     <link rel="stylesheet" href="css/styles.css" />
+   
   </head>
   <body>
     <header>
@@ -29,7 +31,7 @@
       <h2>Adicione um pensamento novo:</h2>
       <section id="form-container">
         <form id="pensamento-form">
-          <input type="hidden" id="pensamento-id" />
+          <input type="hidden" id="pensamento-id"/>
           <label for="pensamento-conteudo">Pensamento</label>
           <textarea 
             id="pensamento-conteudo" 
@@ -49,7 +51,7 @@
             <button 
               type="submit" 
               id="botao-salvar">
-              Adicionar
+              Salvar
             </button>
             <button 
               type="button" 
@@ -62,7 +64,13 @@
       <span></span>
       <section id="lista-pensamentos-container">
         <h3>Meu Mural</h3>
-        <ul id="lista-pensamentos"></ul>
+        <div id="sem-pensamentos">
+          <h4>Esta um pouco vazio aqui !</h4>
+          <p>que tal compartilhar algum pensamento ?</p>
+          <img src="/assets/imagens/lista-vazia.png" alt="Lista de pensamentos vazia">
+        </div>
+        <ul id="lista-pensamentos">          
+        </ul>
       </section>
     </main>
     <footer>
@@ -70,5 +78,9 @@
         2024 Desenvolvido por Alura. 
         Projeto fictício sem fins comerciais.</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script type="module" src="/js/api.js"></script>
+    <script type="module" src="js/main.js" ></script>
+    <script type="module" src="js/ui.js"></script>
   </body>
 </html>

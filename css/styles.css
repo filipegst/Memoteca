@@ -102,6 +102,31 @@ h2, h3 {
   line-height: normal;
 }
 
+
+#sem-pensamentos {
+  margin-top: 50px;
+  text-align: center;
+}
+
+h4{
+  color: var(--Azul-Dark, #041832);
+  font-family: "Poppins", sans-serif;
+  font-size: 28px;
+}
+#sem-pensamentos p {
+  color: var(--Azul-Dark, #041832);
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+#sem-pensamentos img {
+  margin-top: 30px;
+}
+
+
+
 #form-container {
   display: flex;
   padding: 48px 40px;
