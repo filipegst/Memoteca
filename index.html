@@ -36,8 +36,7 @@
           <textarea 
             id="pensamento-conteudo" 
             placeholder="Digite seu pensamento" 
-            required>
-          </textarea>
+            required></textarea>
           <label 
             for="pensamento-autoria">
               Autoria ou Fonte
@@ -47,6 +46,10 @@
             id="pensamento-autoria" 
             placeholder="Insira a autoria ou fonte" 
             required />
+
+
+            <label for="pensamento-data"></label>
+            <input type="date" id="pensamento-data" required>
           <div class="form-botoes">
             <button 
               type="submit" 
@@ -64,6 +67,14 @@
       <span></span>
       <section id="lista-pensamentos-container">
         <h3>Meu Mural</h3>
+
+        <section id="busca-container">
+  
+            <input type="text" name="" id="campoDeBusca" placeholder="O que voce procura?">
+            <img src="/assets/imagens/lupa.png" id="lupa">
+        
+        </section>
+
         <div id="sem-pensamentos">
           <h4>Esta um pouco vazio aqui !</h4>
           <p>que tal compartilhar algum pensamento ?</p>

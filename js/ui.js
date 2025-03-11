@@ -1,18 +1,29 @@
 import api from "./api.js"
 
 const ui = {
-    async renderizarPensamentos(pensamentos){
+
+ 
+
+
+    async renderizarPensamentos(pensamentoFiltrados = null){
         const listaPensamentos = document.getElementById('lista-pensamentos')
         const semPensamentos = document.getElementById('sem-pensamentos')
-        listaPensamentos.innerHTML = ''
+        listaPensamentos.innerHTML =""
 
         try {
-            const pensamentos = await api.buscarPensamentos()
-            if(pensamentos.length === 0){
+            let pensamentosParaRenderizar
+
+            if(pensamentoFiltrados){
+                pensamentosParaRenderizar = pensamentoFiltrados
+            } else{
+                pensamentosParaRenderizar = await api.buscarPensamentos()
+            }
+
+            if(pensamentosParaRenderizar.length === 0){
                 semPensamentos.style.display = 'block'
             }else{
                 semPensamentos.style.display = 'none'
-                pensamentos.forEach(ui.adicionarPensamento)
+                pensamentosParaRenderizar.forEach(ui.adicionarPensamento)
             }
         }
         catch (error) {
@@ -25,6 +36,9 @@ const ui = {
         document.getElementById("pensamento-id").value = pensamento.id
         document.getElementById("pensamento-conteudo").value = pensamento.conteudo
         document.getElementById("pensamento-autoria").value = pensamento.autoria
+        document.getElementById("pensamento-data").value = pensamento.data.
+        toISOString().split("T")[0]
+        document.getElementById("form-container").scrollIntoView()
       },
 
     adicionarPensamento(pensamento){
@@ -46,6 +60,21 @@ const ui = {
         pensamentoAutoria.classList.add ("pensamento-autoria")
         pensamentoAutoria.textContent = pensamento.autoria
 
+        
+        const pensamentoData = document.createElement("div")
+
+        var options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC'
+        }
+        const dataFormatada = pensamento.data.toLocaleDateString('pt-BR', options)
+        pensamentoData.textContent = dataFormatada
+        pensamentoData.classList.add("pensamento-data")
+
+
         const btnEditar = document.createElement('button')
         btnEditar.classList.add('botao-editar')
         btnEditar.onclick = () => ui.preencherFormulario(pensamento.id)
@@ -54,6 +83,20 @@ const ui = {
         iconeEditar.src = "assets/imagens/icone-editar.png"
         iconeEditar.alt = "Editar"
         btnEditar.appendChild(iconeEditar)
+
+
+        const btnLike = document.createElement("button")
+        btnLike.classList.add('botao-like')
+        btnLike.onclick = async () => {
+            try{
+                await api.atualizarFavorito(pensamento.id, !pensamento.favorito)
+                ui.renderizarPensamentos()
+            } catch (error) {
+                ("Erro ao atualizar pensamento")
+                throw error
+            }
+        }
+
         
         
         const btnExcluir = document.createElement('button')
@@ -72,8 +115,15 @@ const ui = {
         iconeExcluir.alt = "Excluir"
         btnExcluir.appendChild(iconeExcluir)
 
+
+        const iconeLike = document.createElement("img")
+        iconeLike.src = pensamento.favorito ? "assets/imagens/icone-favorito.png" : "assets/imagens/icone-favorito_outline.png"
+        iconeLike.alt = "Curtir"
+        btnLike.appendChild(iconeLike)
+
         const icones = document.createElement('div')
         icones.classList.add('icones')
+        icones.appendChild(btnLike)
         icones.appendChild(btnEditar)
         icones.appendChild(btnExcluir)
 
@@ -83,6 +133,7 @@ const ui = {
         li.appendChild(iconeAspas);
         li.appendChild(pensamentoConteudo);
         li.appendChild(pensamentoAutoria);
+        li.appendChild(pensamentoData);
         li.appendChild(icones);
         listaPensamentos.appendChild(li)
     },
